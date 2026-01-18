@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+# pyright: ignore[decouple-missing-import]
 from pathlib import Path
 from decouple import config
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,16 +31,17 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'foodOnlineAPP'
+    'foodOnlineAPP',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,6 +87,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -128,3 +132,7 @@ STATICFILES_DIRS = [ BASE_DIR / "static" ]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    messages.ERROR:'danger'
+}
